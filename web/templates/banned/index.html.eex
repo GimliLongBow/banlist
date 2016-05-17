@@ -1,0 +1,22 @@
+<h2>Banned Names</h2>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>Name</th>
+
+      <th class="text-xs-right"><%= link "+", to: banned_path(@conn, :new), class: "btn btn-success btn-xs" %></th>
+    </tr>
+  </thead>
+  <tbody>
+<%= for banned <- @banned do %>
+    <tr>
+      <td><%= link banned.name, to: banned_path(@conn, :edit, banned), class: "btn btn-default btn-xs" %></td>
+
+      <td class="text-xs-right">
+        <%= link "X", to: banned_path(@conn, :delete, banned), method: :delete, data: [confirm: "Are you sure?"], class: "btn btn-danger btn-xs" %>
+      </td>
+    </tr>
+<% end %>
+  </tbody>
+</table>

@@ -1,0 +1,13 @@
+<h2>Show banned</h2>
+
+<ul>
+
+  <li>
+    <strong>Name:</strong>
+    <%= @banned.name %>
+  </li>
+
+</ul>
+
+<%= link "Edit", to: banned_path(@conn, :edit, @banned) %>
+<%= link "Back", to: banned_path(@conn, :index) %>
