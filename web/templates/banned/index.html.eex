@@ -1,6 +1,7 @@
 <h2>Banned Names</h2>
 
-<table class="table">
+<div class="table-responsive">
+<table class="table table-striped">
   <thead>
     <tr>
       <th>Name</th>
@@ -11,7 +12,7 @@
   <tbody>
 <%= for banned <- @banned do %>
     <tr>
-      <td><%= link banned.name, to: banned_path(@conn, :edit, banned), class: "btn btn-default btn-xs" %></td>
+      <td><%= link banned.name, to: banned_path(@conn, :edit, banned), class: "btn btn-default btn-xs btn-info" %></td>
 
       <td class="text-xs-right">
         <%= link "X", to: banned_path(@conn, :delete, banned), method: :delete, data: [confirm: "Are you sure?"], class: "btn btn-danger btn-xs" %>
@@ -20,3 +21,4 @@
 <% end %>
   </tbody>
 </table>
+</div>
