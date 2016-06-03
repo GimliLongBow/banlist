@@ -5,7 +5,7 @@ defmodule Banlist.Repo.Migrations.CreateUser do
     create table(:users) do
       add :name, :string
       add :email, :string
-      add :password, :string
+      add :password_hashed, :string
 
       timestamps
     end

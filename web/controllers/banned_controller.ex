@@ -4,6 +4,7 @@ defmodule Banlist.BannedController do
   alias Banlist.Banned
 
   plug :scrub_params, "banned" when action in [:create, :update]
+  plug :authenticate
 
   def index(conn, _params) do
     banned = Repo.all(Banned)
@@ -63,5 +64,16 @@ defmodule Banlist.BannedController do
     conn
     |> put_flash(:info, "Banned deleted successfully.")
     |> redirect(to: banned_path(conn, :index))
+  end
+
+  def authenticate(conn, _opts) do
+    if conn.assigns.current_user do
+      conn
+    else
+      conn
+      |> put_flash(:error, "You must be logged in to access this page")
+      |> redirect(to: session_path(conn, :new))
+      |> halt()
+    end
   end
 end

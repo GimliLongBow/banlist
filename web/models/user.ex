@@ -4,7 +4,8 @@ defmodule Banlist.User do
   schema "users" do
     field :name, :string
     field :email, :string
-    field :password, :string
+    field :password_hashed, :string
+    field :password, :string, virtual: true
 
     timestamps
   end
@@ -21,5 +22,28 @@ defmodule Banlist.User do
   def changeset(model, params \\ :empty) do
     model
     |> cast(params, @required_fields, @optional_fields)
+    |> validate_format(:email, ~r/@/)
+    |> validate_confirmation(:password)
+    |> unique_constraint(:email)
+  end
+
+  @doc """
+  Creates a changeset with a password.
+  """
+  def password_changeset(model, params \\ :empty) do
+    model
+    |> changeset(params)
+    |> cast(params, ~w(password), [])
+    |> validate_length(:password, min: 6, max: 100)
+    |> create_password_hash
+  end
+
+  def create_password_hash(changeset) do
+    case changeset do
+      %Ecto.Changeset{valid?: true, changes: %{password: pass}} ->
+        put_change(changeset, :password_hashed, Comeonin.Bcrypt.hashpwsalt(pass))
+      _ ->
+        changeset
+    end
   end
 end

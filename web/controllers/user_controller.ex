@@ -4,6 +4,7 @@ defmodule Banlist.UserController do
   alias Banlist.User
 
   plug :scrub_params, "user" when action in [:create, :update]
+  plug :authenticate
 
   def index(conn, _params) do
     users = Repo.all(User)
@@ -16,12 +17,12 @@ defmodule Banlist.UserController do
   end
 
   def create(conn, %{"user" => user_params}) do
-    changeset = User.changeset(%User{}, user_params)
+    changeset = User.password_changeset(%User{}, user_params)
 
     case Repo.insert(changeset) do
-      {:ok, _user} ->
+      {:ok, user} ->
         conn
-        |> put_flash(:info, "User created successfully.")
+        |> put_flash(:info, "#{user.name} created successfully.")
         |> redirect(to: user_path(conn, :index))
       {:error, changeset} ->
         render(conn, "new.html", changeset: changeset)
@@ -63,5 +64,16 @@ defmodule Banlist.UserController do
     conn
     |> put_flash(:info, "User deleted successfully.")
     |> redirect(to: user_path(conn, :index))
+  end
+
+  def authenticate(conn, _opts) do
+    if conn.assigns.current_user do
+      conn
+    else
+      conn
+      |> put_flash(:error, "You must be logged in to access this page")
+      |> redirect(to: session_path(conn, :new))
+      |> halt()
+    end
   end
 end
