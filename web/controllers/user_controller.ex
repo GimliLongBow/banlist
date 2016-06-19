@@ -4,7 +4,7 @@ defmodule Banlist.UserController do
   alias Banlist.User
 
   plug :scrub_params, "user" when action in [:create, :update]
-  plug :authenticate
+  plug :authenticate_user
 
   def index(conn, _params) do
     users = Repo.all(User)
@@ -66,14 +66,4 @@ defmodule Banlist.UserController do
     |> redirect(to: user_path(conn, :index))
   end
 
-  def authenticate(conn, _opts) do
-    if conn.assigns.current_user do
-      conn
-    else
-      conn
-      |> put_flash(:error, "You must be logged in to access this page")
-      |> redirect(to: session_path(conn, :new))
-      |> halt()
-    end
-  end
 end

@@ -26,6 +26,7 @@ defmodule Banlist.ConnCase do
       import Ecto.Query, only: [from: 1, from: 2]
 
       import Banlist.Router.Helpers
+      import Banlist.TestHelpers
 
       # The default endpoint for testing
       @endpoint Banlist.Endpoint

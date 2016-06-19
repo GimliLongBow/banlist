@@ -36,6 +36,7 @@ defmodule Banlist.Web do
 
       import Banlist.Router.Helpers
       import Banlist.Gettext
+      import Banlist.Auth, only: [authenticate_user: 2]
     end
   end
 
@@ -58,6 +59,8 @@ defmodule Banlist.Web do
   def router do
     quote do
       use Phoenix.Router
+
+      import Banlist.Auth, only: [authenticate_user: 2]
     end
   end
 

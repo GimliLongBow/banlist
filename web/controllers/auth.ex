@@ -1,5 +1,7 @@
 defmodule Banlist.Auth do
   import Plug.Conn
+  import Phoenix.Controller
+  alias Banlist.Router.Helpers
 
   def init(opts) do
     Keyword.fetch!(opts, :repo)
@@ -7,8 +9,15 @@ defmodule Banlist.Auth do
 
   def call(conn, repo) do
     user_id = get_session(conn, :user_id)
-    user    = user_id && repo.get(Banlist.User, user_id)
-    assign(conn, :current_user, user)
+
+    cond do
+      user = conn.assigns[:current_user] ->
+        conn
+      user = user_id && repo.get(Banlist.User, user_id) ->
+        assign(conn, :current_user, user)
+      true ->
+        assign(conn, :current_user, nil)
+    end
   end
 
   def login(conn, user) do
@@ -28,8 +37,19 @@ defmodule Banlist.Auth do
       user ->
         {:error, :unauthorizzed, conn}
       true ->
-        Comeonin. dummy_checkpw()
+        Comeonin.Bcrypt.dummy_checkpw()
         {:error, :not_found, conn}
+    end
+  end
+
+  def authenticate_user(conn, _opts) do
+    if conn.assigns.current_user do
+      conn
+    else
+      conn
+      |> put_flash(:error, "You must be logged in to access this page")
+      |> redirect(to: Helpers.session_path(conn, :new))
+      |> halt()
     end
   end
 end

@@ -23,8 +23,8 @@ defmodule Banlist.User do
     model
     |> cast(params, @required_fields, @optional_fields)
     |> validate_format(:email, ~r/@/)
-    |> validate_confirmation(:password)
     |> unique_constraint(:email)
+    |> validate_confirmation(:password)
   end
 
   @doc """

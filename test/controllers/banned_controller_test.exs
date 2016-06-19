@@ -5,14 +5,20 @@ defmodule Banlist.BannedControllerTest do
   @valid_attrs %{name: "some content"}
   @invalid_attrs %{}
 
+  setup do
+    user = insert_user
+    conn = assign(conn(), :current_user, user)
+    {:ok, conn: conn, user: user}
+  end
+
   test "lists all entries on index", %{conn: conn} do
     conn = get conn, banned_path(conn, :index)
-    assert html_response(conn, 200) =~ "Listing banned"
+    assert html_response(conn, 200) =~ "Banned Names"
   end
 
   test "renders form for new resources", %{conn: conn} do
     conn = get conn, banned_path(conn, :new)
-    assert html_response(conn, 200) =~ "New banned"
+    assert html_response(conn, 200) =~ "Add name"
   end
 
   test "creates resource and redirects when data is valid", %{conn: conn} do
@@ -23,7 +29,7 @@ defmodule Banlist.BannedControllerTest do
 
   test "does not create resource and renders errors when data is invalid", %{conn: conn} do
     conn = post conn, banned_path(conn, :create), banned: @invalid_attrs
-    assert html_response(conn, 200) =~ "New banned"
+    assert html_response(conn, 200) =~ "Add name"
   end
 
   test "shows chosen resource", %{conn: conn} do

@@ -2,6 +2,7 @@ defmodule Banlist.UserTest do
   use Banlist.ModelCase
 
   alias Banlist.User
+  alias Banlist.Repo
 
   @valid_attrs %{email: "someone@none.com", name: "Bob Test", password: "RandomPassedWord"}
   @invalid_attrs %{email: "aninvalidemail"}
@@ -17,10 +18,12 @@ defmodule Banlist.UserTest do
   end
 
   test "changeset with an existing email" do
-    changeset = User.changeset(%User{}, @valid_attrs)
-    {:ok, result} = Repo.insert(changeset)
+    User.changeset(%User{}, @valid_attrs)
+    |> Repo.insert!
 
-    changeset_with_dup_email = User.changeset(%User{}, @valid_attrs)
-    refute changeset_with_dup_email.valid?
+    {:error, changeset} = User.changeset(%User{}, @valid_attrs)
+    |> Repo.insert
+
+    refute changeset.valid?
   end
 end
