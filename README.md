@@ -13,26 +13,28 @@ Now you can visit [`localhost:4000`](http://localhost:4000) from your browser.
 
 ## Online Demo
 
-Coming shortly! In the mean time, gaze upon the incredible security of the accounts below:
+https://banlist.herokuapp.com/
+
+Gaze upon the incredible security of the accounts below:
 
 Admin:
 
-* Username: admin
-* Password: demo
+* Username: admin@substratalcode.com
+* Password: password
 
 Normal:
 
-* Username: test
-* Password: test
+* Username: test@substratalcode.com
+* Password: password
 
 ## To Do
 
 - [x] Banned schema
 - [x] Banned controller and views
-- [ ] Banned list
+- [x] Banned list
 - [ ] Search list
 - [x] Users
-- [ ] User authentication
+- [x] User authentication
 - [ ] User authorization (admin, non-admin)
 - [ ] Sass compiling
 - [ ] Explore Brunch

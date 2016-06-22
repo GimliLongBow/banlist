@@ -16,7 +16,7 @@
       <td><%= link user.name, to: user_path(@conn, :edit, user), class: "btn btn-default btn-xs btn-info" %></td>
       <td><%= user.email %></td>
 
-      <td class="text-right">
+      <td class="text-xs-right">
         <%= link "X", to: user_path(@conn, :delete, user), method: :delete, data: [confirm: "Are you sure?"], class: "btn btn-danger btn-xs" %>
       </td>
     </tr>

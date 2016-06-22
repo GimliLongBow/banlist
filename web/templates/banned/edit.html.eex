@@ -1,6 +1,6 @@
-<h2>Edit banned</h2>
+<h2>Edit banned </h2>
 
 <%= render "form.html", changeset: @changeset,
                         action: banned_path(@conn, :update, @banned) %>
 
-<%= link "Back", to: banned_path(@conn, :index) %>
+<%= link "Back", to: banned_path(@conn, :index), class: "pull-right" %>
