@@ -12,8 +12,5 @@ config :logger, level: :warn
 # Configure your database
 config :banlist, Banlist.Repo,
   adapter: Ecto.Adapters.Postgres,
-  username: "banned_dev",
-  password: "password",
   database: "banned_test",
-  hostname: "localhost",
   pool: Ecto.Adapters.SQL.Sandbox
