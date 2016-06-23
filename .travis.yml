@@ -11,6 +11,7 @@ addons:
 before_script:
   - psql -c 'create database banned_test;' -U postgres
 deploy:
+  provider: heroku
   run:
     - "MIX_ENV=test mix ecto.migrate"
     - "mix run priv/repo/seeds.exs"
