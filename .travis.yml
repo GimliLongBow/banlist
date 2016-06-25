@@ -12,8 +12,10 @@ before_script:
 deploy:
   provider: heroku
   run:
-    - "MIX_ENV=test mix ecto.migrate"
-    - "mix run priv/repo/seeds.exs"
+    - "mix local.rebar --force"
+    - "mix local.hex --force"
+    - "mix deps.get"
+    - "mix ecto.setup"
     - restart
   api_key:
     secure: mTlB8WKv7+GNZIotaLVT7HbHTIem/6GC+BOZGiH57KC+u0EvS5bKCD9PAgQI9vZbrrM4BD60aoQu1kI2kVWh83Ze/Drb17boWvxdnKZVBRLK/CqcyZJ7RTzG30ylNQxL+WVs5zff59K6kcrcN/vmRSy3J2RULNLWYaW/i0HX2XRro8Gwt7yXcOQCkYD1PNurcIaErsRnt5AgQ2tsZDzZLM7kc5sYFeWMghtGYU9hvUchPcpkSD31mRUQqKyqhrRL9gKGE5C9R/Qe4lRnclzCGTu95OZK5pzIpT6K/bOS1qymCesQv0MjaPlY56vvTfoavM7uWFb+Vj7H87RZtZM68kr6xdGmFIMpDQWNCNt2Ro2LI6FeHRVFNMM6tVQUCRIcmymZ978IahGcr6uOoc60XV6cRttimwTVHMdNmG9Gs/IbVLU0Hm9tRsOUP40ixZVXx95AFkPN/6CSzvMQyrCUWvbEGX4N2xaHI9qLo4rlwIlPllOuhTsiYxaAOg8WoHk+KY56/1XtJDbhKNpwk/e6ZA6CgXZoxfxBhHrLAdnQ0lbUGe68ABpBNqG9wJq74K4N+W/Ch4N/K2+1AhDALrFfD37+DHeUWTyxRqFC7ncVCTKHgN0406gpC/r1sRH8f9QaCyY4uVP707RirJ8Q5ps7H16ou2HX6PMmuvo8gC4c4jc=
