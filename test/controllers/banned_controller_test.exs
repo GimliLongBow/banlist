@@ -7,7 +7,7 @@ defmodule Banlist.BannedControllerTest do
 
   setup do
     user = insert_user
-    conn = assign(conn(), :current_user, user)
+    conn = assign(build_conn(), :current_user, user)
     {:ok, conn: conn, user: user}
   end
 

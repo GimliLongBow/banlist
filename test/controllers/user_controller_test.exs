@@ -13,12 +13,12 @@ defmodule Banlist.UserControllerTest do
 
   setup do
     user = insert_user
-    conn = assign(conn(), :current_user, user)
+    conn = assign(build_conn(), :current_user, user)
     {:ok, conn: conn, user: user}
   end
 
   test "requires user authentication on all actions" do
-    conn = conn()
+    conn = build_conn()
     Enum.each([
       get(conn, user_path(conn, :new)),
       get(conn, user_path(conn, :index)),
